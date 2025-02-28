@@ -14,20 +14,23 @@ class StudentController extends Controller
         $students = Student::with('college')->get();
         return view('students.index', compact('students'));
     }
+
     // Form to add a new student
-    public function createStudent()
+    public function create()
     {
         $colleges = College::all(); // Get all colleges for dropdown
         return view('students.create', compact('colleges'));
     }
-    //Store a new student
-    public function storeStudent(Request $request){
+
+    // Store a new student
+    public function storeStudent(Request $request)
+    {
         $request->validate([
-            'name' =>'required',
-            'email' => 'required|email|unique:students.email',
+            'name' => 'required',
+            'email' => 'required|email|unique:students,email',
             'phone' => 'required|digits:8', // Assuming Maltese phone number validation
             'dob' => 'required|date',
-            'college_id' => 'required|exists:colleges,id', //validation requiring foreign key (college) exists
+            'college_id' => 'required|exists:colleges,id', // validation requiring foreign key (college) exists
         ]);
 
         Student::create([
@@ -38,23 +41,27 @@ class StudentController extends Controller
             'college_id' => $request->college_id,
         ]);
 
-        //Redirect to students.index page with success message
+        // Redirect to students.index page with success message
         return redirect()->route('students.index')->with('success', 'Student added successfully');
     }
-    //Form to update a student's details
-    public function edit($id){
+
+    // Form to update a student's details
+    public function edit($id)
+    {
         $student = Student::findOrFail($id);
         $colleges = College::all(); // Get all colleges for dropdown
-        return view('students.edit');
+        return view('students.edit', compact('student', 'colleges'));
     }
-    //Update a student's details
-    public function updateStudent(Request $request, $id){
+
+    // Update a student's details
+    public function updateStudent(Request $request, $id)
+    {
         $request->validate([
-            'name' =>'required',
-            'email' => 'required|email|unique:students.email',
+            'name' => 'required',
+            'email' => 'required|email|unique:students,email,' . $id,
             'phone' => 'required|digits:8', // Assuming Maltese phone number validation
             'dob' => 'required|date',
-            'college_id' => 'required|exists:colleges,id', //validation requiring foreign key (college) exists
+            'college_id' => 'required|exists:colleges,id', // validation requiring foreign key (college) exists
         ]);
 
         $student = Student::findOrFail($id);
@@ -67,15 +74,17 @@ class StudentController extends Controller
             'college_id' => $request->college_id,
         ]);
 
-        //Redirect to students.index page with success message
+        // Redirect to students.index page with success message
         return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
-    //Delete a student
-    public function deleteStudent($id){
+
+    // Delete a student record
+    public function deleteStudent($id)
+    {
         $student = Student::findOrFail($id);
         $student->delete();
 
-        //Redirect to students.index page with success message
+        // Redirect to students.index page with success message
         return redirect()->route('students.index')->with('success', 'Student deleted successfully');
     }
 }

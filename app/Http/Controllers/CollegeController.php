@@ -14,7 +14,7 @@ class CollegeController extends Controller
         return view('colleges.index', compact('colleges'));
     }
     // Form to add a new college
-    public function createCollege()
+    public function create()
     {
         return view('colleges.create');
     }
