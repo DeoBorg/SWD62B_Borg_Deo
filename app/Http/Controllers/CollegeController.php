@@ -21,7 +21,7 @@ class CollegeController extends Controller
     // Store to add a new college
     public function storeCollege(Request $request) {
         $request->validate([
-            'name' => 'required'|'unique:colleges.name',
+            'name' => 'required|unique:colleges,name',
             'address' => 'required',
         ]);
 
@@ -41,7 +41,7 @@ class CollegeController extends Controller
     }
     public function updateCollege(Request $request, $id){
         $request->validate([
-            'name' => 'required'|'unique:colleges.name',
+            'name' => 'required|unique:colleges,name',
             'address' => 'required',
         ]);
 

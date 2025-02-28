@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    // List all students
-    public function index()
+    // List all students, allows filters by college and allows sorting students by name
+    public function index(Request $request)
     {
-        $students = Student::with('college')->get();
-        return view('students.index', compact('students'));
+        $college_id = $request->input('college_id');
+        $sort = $request->input('sort', 'asc');
+        $colleges = College::all();
+
+        $query = Student::with('college');
+
+        if ($college_id) {
+            $query->where('college_id', $college_id);
+        }
+
+        $students = $query->orderBy('name', $sort)->get();
+
+        return view('students.index', compact('students', 'colleges', 'college_id', 'sort'));
     }
 
     // Form to add a new student

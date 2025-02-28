@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>My Contact</title>
+    <title>College and Student Management System</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
     <!-- Bootstrap -->
@@ -16,9 +16,9 @@
   <body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container">
-        <a class="navbar-brand text-uppercase" href="index.html">            
-            <strong>Student and College Management System</strong> 
+      <div class="container d-flex justify-content-between">
+        <a class="navbar-brand text-uppercase" href="{{ url('/') }}">            
+            <strong>College and Student Management System</strong> 
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -26,9 +26,11 @@
             
         <!-- /.navbar-header -->
         <div class="collapse navbar-collapse" id="navbar-toggler">
-          <ul class="navbar-nav">
-            <li class="nav-item"><a href="#" class="nav-link">Companies</a></li>
-            <li class="nav-item active"><a href="#" class="nav-link">Contacts</a></li>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="{{ route('colleges.index') }}" class="nav-link">Colleges</a></li>
+            <li class="nav-item"><a href="{{ route('students.index') }}" class="nav-link">Students</a></li>
+            <li class="nav-item"><a href="{{ route('students.create') }}" class="nav-link">Add New Student</a></li>
+            <li class="nav-item"><a href="{{ route('colleges.create') }}" class="nav-link">Add New College</a></li> 
           </ul>
         </div>
       </div>
@@ -38,5 +40,16 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script>
+      $(document).ready(function() {
+        $('.nav-item').hover(
+          function() {
+            $(this).addClass('active');
+          }, function() {
+            $(this).removeClass('active');
+          }
+        );
+      });
+    </script>
   </body>
 </html>
