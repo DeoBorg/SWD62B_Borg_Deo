@@ -8,6 +8,9 @@
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
     <h2 class="mt-4">List of Students</h2>
+
+    @include('students.partials._create_student_form')
+
     @if($students->isEmpty())
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
         <div class="alert alert-danger text-center fw-bold fs-3 p-4" style="max-width: 500px;">
@@ -31,6 +34,7 @@
                 <th>Phone</th>
                 <th>Date of Birth</th>
                 <th>College</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +46,10 @@
                 <td>{{ $student->dob }}</td>
                 <td>{{ $student->college->name }}</td>
                 <td>
-                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning">Edit</a>
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#editStudentModal{{ $student->id }}">
+                        Edit
+                    </button>
+
                     <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
@@ -50,6 +57,9 @@
                     </form>
                 </td>
             </tr>
+
+            @include('students.partials._edit_student_form', ['student' => $student])
+
             @endforeach
         </tbody>
     </table>
