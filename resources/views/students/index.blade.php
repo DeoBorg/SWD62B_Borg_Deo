@@ -11,6 +11,15 @@
 
     @include('students.partials._create_student_form')
 
+    <div class="row mb-3">
+        <div class="col-md-6">
+            @include('students.partials._filter_college')
+        </div>
+        <div class="col-md-6">
+            @include('students.partials._sort_name')
+        </div>
+    </div>
+
     @if($students->isEmpty())
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
         <div class="alert alert-danger text-center fw-bold fs-3 p-4" style="max-width: 500px;">
@@ -18,15 +27,7 @@
         </div>
     </div>
     @else
-    <div class="row mb-3">
-        <div class="col-md-6">
-            @include('students.partials._filter_college')
-        </div>
-    </div>
     <table class="table mt-3">
-        <div class="col-md-6">
-            @include('students.partials._sort_name')
-        </div>
         <thead>
             <tr>
                 <th>Name</th>

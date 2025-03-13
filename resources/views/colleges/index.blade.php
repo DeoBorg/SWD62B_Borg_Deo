@@ -8,6 +8,7 @@
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
     <h2 class="mt-4">List of Colleges</h2>
+    
     @if($colleges->isEmpty())
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
         <div class="alert alert-danger text-center fw-bold fs-3 p-4" style="max-width: 500px;">
@@ -20,6 +21,7 @@
             <tr>
                 <th>Name</th>
                 <th>Address</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +31,14 @@
                 <td>{{ $college->address }}</td>
                 <td>
                     <a href="{{ route('colleges.edit', $college->id) }}" class="btn btn-warning">Edit</a>
-                    <form action="{{ route('colleges.destroy', $college->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+
+                    <!-- Button to Trigger Delete Modal -->
+                    <button class="btn btn-danger delete-college-btn" 
+                            data-toggle="modal" 
+                            data-target="#confirmDeleteModal" 
+                            data-url="{{ route('colleges.destroy', $college->id) }}">
+                        Delete
+                    </button>
                 </td>
             </tr>
             @endforeach
@@ -41,4 +46,8 @@
     </table>
     @endif
 </div>
+
+<!-- Include the Delete Confirmation Modal -->
+@include('colleges.partials._confirm_delete_college')
+
 @endsection
